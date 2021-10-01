@@ -1,0 +1,23 @@
+{
+    "title" : "Apache RocketMQ开发者指南",
+    "author" : "RocketMQ官方",
+    "links" : {
+        "sidebar" : {
+            "博客首页" : "http://www.itmuch.com",
+            "RocketMQ官方网站" : "http://rocketmq.apache.org"
+        }
+    },
+    "plugins":["3-ba@^0.9.0","anchor-navigation-ex@0.1.8"],
+    "pluginsConfig": {
+        "3-ba": {
+            "token": "13766878cde148282622871dd245a973"
+        },
+        "anchor-navigation-ex": {
+            "isRewritePageTitle": true,
+            "isShowTocTitleIcon": true,
+            "tocLevel1Icon": "fa fa-hand-o-right",
+            "tocLevel2Icon": "fa fa-hand-o-right",
+            "tocLevel3Icon": "fa fa-hand-o-right"
+        }
+    }
+}

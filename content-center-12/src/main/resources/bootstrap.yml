@@ -1,0 +1,12 @@
+#以下配置只能放在bootstrap.yml
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+  #默认读取加载当前 服务名.yml 配置
+  application:
+    name: content-center
+  profiles:
+    active: dev

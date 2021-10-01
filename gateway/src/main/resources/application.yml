@@ -1,0 +1,63 @@
+server:
+  port: 8040
+spring:
+  redis:
+    host: 180.163.84.215
+    port: 6379
+  application:
+    name: gateway
+  zipkin:
+    base-url: http://localhost:9411/
+    discoveryClientEnabled: false
+  sleuth:
+    sampler:
+      # 抽样率，默认是0.1（10%）
+      probability: 1.0
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      #全局过滤器
+      default-filters:
+        # - AddRequestParameter=foo, bar
+      discovery:
+        locator:
+          # 让gateway通过服务发现组件找到其他的微服务
+          enabled: true
+      routes:
+        - id: user_route
+          uri: lb://user-center
+          predicates:
+            - Path=/users/**
+        - id: content_route
+          uri: lb://content-center
+          predicates:
+            - Path=/shares/**,/admin/**
+          #todo 可以通过filter 添加header等等
+#          filters:
+#            - AddRequestHeader=X-Request-Foo, Bar
+          #todo 可以通过filter 添加参数等等
+#          filters:
+#            - AddRequestParameter=foo, bar
+          filters:
+            - name: RequestRateLimiter
+                args:
+                  # 令牌桶每秒填充平均速率
+                  redis-rate-limiter.replenishRate: 1
+                  # 令牌桶的上限
+                  redis-rate-limiter.burstCapacity: 2
+                  # 使用SpEL表达式从Spring容器中获取Bean对象
+                  key-resolver: "#{@pathKeyResolver}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+logging:
+  level:
+    org.springframework.cloud.gateway: trace

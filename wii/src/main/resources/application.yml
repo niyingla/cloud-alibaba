@@ -1,0 +1,21 @@
+server:
+  port: 8070
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      discovery:
+        locator:
+          # \u8BA9spring cloud gateway\u4ECEnacos\u4E0A\u83B7\u53D6\u5FAE\u670D\u52A1
+          enabled: true
+  application:
+    name: wii
+wii:
+  # \u5F02\u6784\u5FAE\u670D\u52A1\u7684IP
+  ip: localhost
+  # \u5F02\u6784\u5FAE\u670D\u52A1\u7684port
+  port: 8060
+  # \u5F02\u6784\u5FAE\u670D\u52A1\u7684\u5065\u5EB7\u68C0\u67E5\u5730\u5740(\u975E\u5FC5\u9009)
+  health-check-url: http://localhost:8060/health.json
